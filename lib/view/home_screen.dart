@@ -1,0 +1,204 @@
+import 'package:flutter/material.dart';
+import 'package:haftsara_blog/consts/const_colors.dart';
+import 'package:haftsara_blog/gen/assets.gen.dart';
+import 'package:haftsara_blog/view/home_main_body_screen.dart';
+import 'package:haftsara_blog/view/profile_screen.dart';
+import 'package:haftsara_blog/view/write_post.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+class _HomeScreenState extends State<HomeScreen> {
+  int selectedPageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    var textTheme = Theme.of(context).textTheme;
+    // List<Widget> blogMainScreenPagesList = [
+    //   HomeMainBodyScreen(screenSize: screenSize, textTheme: textTheme),
+    //   WritePost(screenSize: screenSize, textTheme: textTheme),
+    //   ProfileScreen(screenSize: screenSize, textTheme: textTheme),
+    // ];
+    return Scaffold(
+      key: _key,
+      backgroundColor: Colors.white,
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+                child: Image.asset(
+              Assets.images.logo.path,
+              scale: 0.5,
+              height: 40,
+            )),
+            ListTile(
+              onTap: null,
+              title: Text(
+                "پروفایل کاربری",
+                style: textTheme.headlineMedium,
+              ),
+            ),
+            const Divider(
+              indent: 10,
+              endIndent: 10,
+            ),
+            ListTile(
+              onTap: null,
+              title: Text(
+                "درباره ما",
+                style: textTheme.headlineMedium,
+              ),
+            ),
+            const Divider(
+              indent: 10,
+              endIndent: 10,
+            ),
+            ListTile(
+              onTap: null,
+              title: Text(
+                "اشتراک‌گذاری بلاگ",
+                style: textTheme.headlineMedium,
+              ),
+            ),
+            const Divider(
+              indent: 10,
+              endIndent: 10,
+            ),
+            ListTile(
+              onTap: null,
+              title: Text(
+                "بلاگ در گیت‌هاب",
+                style: textTheme.headlineMedium,
+              ),
+            ),
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: // top menu
+            Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () {
+                _key.currentState?.openDrawer();
+              },
+              child: const Icon(
+                Icons.menu,
+                size: 25,
+              ),
+            ),
+            Image(
+              image: Assets.images.logo.provider(),
+              height: screenSize.width / 14,
+            ),
+            const Icon(
+              Icons.search,
+              size: 25,
+            ),
+          ],
+        ),
+      ),
+      body: Stack(children: [
+        Positioned.fill(
+            child: IndexedStack(
+          index: selectedPageIndex,
+          children: [
+            HomeMainBodyScreen(screenSize: screenSize, textTheme: textTheme),
+            WritePost(screenSize: screenSize, textTheme: textTheme),
+            ProfileScreen(screenSize: screenSize, textTheme: textTheme),
+          ],
+        )),
+
+        // bottom navigation
+        BottomNavigation(
+          screenSize: screenSize,
+          changeScreen: (int value) {
+            setState(() {
+              selectedPageIndex = value;
+            });
+          },
+        ),
+      ]),
+    );
+  }
+}
+
+class BottomNavigation extends StatelessWidget {
+  const BottomNavigation({
+    super.key,
+    required this.screenSize,
+    required this.changeScreen,
+  });
+
+  final Size screenSize;
+  final Function(int) changeScreen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 7,
+      child: Container(
+        height: screenSize.height / 10,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                colors: ConstColors.bottomNavOverlayGradientColor,
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter)),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: Container(
+            height: screenSize.height / 12,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                gradient: const LinearGradient(
+                  colors: ConstColors.bottomNavGradientColor,
+                )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    changeScreen(0);
+                  },
+                  icon: ImageIcon(
+                    Assets.icons.homeIcon.provider(),
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+                IconButton(
+                    onPressed: () => changeScreen(1),
+                    icon: ImageIcon(
+                      Assets.icons.writer.provider(),
+                      color: Colors.white,
+                      size: 28,
+                    )),
+                IconButton(
+                    onPressed: () => changeScreen(2),
+                    icon: ImageIcon(
+                      Assets.icons.user.provider(),
+                      color: Colors.white,
+                      size: 30,
+                    ))
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
