@@ -29,4 +29,9 @@ class ConstColors {
     Color.fromARGB(255, 0, 0, 0),
     Color.fromARGB(0, 0, 0, 0),
   ];
+  static const List<Color> appBarGradientColor = [
+    Color.fromARGB(255, 30, 0, 100),
+    Color.fromARGB(0, 0, 0, 0),
+  ];
+
 }

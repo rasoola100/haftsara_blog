@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:haftsara_blog/blog_divider.dart';
-import 'package:haftsara_blog/consts/const_colors.dart';
+import 'package:haftsara_blog/components/blog_divider.dart';
+import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 
 class WritePost extends StatelessWidget {

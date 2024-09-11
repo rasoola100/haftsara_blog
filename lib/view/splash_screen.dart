@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:haftsara_blog/consts/const_colors.dart';
+import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:haftsara_blog/view/home_screen.dart';

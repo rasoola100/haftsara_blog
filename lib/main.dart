@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:haftsara_blog/consts/const_colors.dart';
+import 'package:haftsara_blog/components/const_colors.dart';
+import 'package:haftsara_blog/view/article_list_screen.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
 import 'package:haftsara_blog/view/register_intro.dart';
+import 'package:haftsara_blog/view/single_screen.dart';
 import 'package:haftsara_blog/view/splash_screen.dart';
 import 'package:flutter/services.dart';
 
@@ -64,6 +66,11 @@ class Haftsara extends StatelessWidget {
               fontSize: 15,
               fontWeight: FontWeight.w600,
               color: Colors.black),
+          labelMedium: TextStyle(
+              fontFamily: 'bNazanin',
+              fontSize: 16,
+              color: Color.fromARGB(255, 90, 89, 89)
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -87,9 +94,9 @@ class Haftsara extends StatelessWidget {
           )
         ),
       ),
-      home: const SplashScreen(),
+      // home: const SplashScreen(),
       // home: const HomeScreen(),
-      // home: const RegisterIntro(),
+      home: const SingleScreen(),
     );
   }
 }

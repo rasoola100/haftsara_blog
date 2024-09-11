@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:haftsara_blog/consts/const_strings.dart';
+import 'package:haftsara_blog/components/const_strings.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:haftsara_blog/view/category_screen.dart';
 import 'package:validators/validators.dart';
@@ -19,7 +21,7 @@ class RegisterIntro extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              Assets.images.robotIcon,
+              Assets.images.robotIcon.path,
               height: 100,
             ),
             const SizedBox(
@@ -64,7 +66,7 @@ class RegisterIntro extends StatelessWidget {
                                 padding: const EdgeInsets.all(20),
                                 child: TextField(
                                   onChanged: (value) {
-                                    print(
+                                    log(
                                         "$value is Email = ${isEmail(value)}");
                                   },
                                   textAlign: TextAlign.end,
@@ -127,7 +129,7 @@ class RegisterIntro extends StatelessWidget {
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () {
-                                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => CategoryScreen()));
+                                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const CategoryScreen()));
                                                     }, 
                                                     child: Text("ثبت", style: textTheme.headlineMedium))
                                                 ],

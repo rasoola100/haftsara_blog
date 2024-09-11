@@ -1,4 +1,5 @@
 import 'package:haftsara_blog/gen/assets.gen.dart';
+import 'package:haftsara_blog/model/blog_model.dart';
 import 'package:haftsara_blog/model/category_model.dart';
 import 'package:haftsara_blog/model/podcast_model.dart';
 import 'package:haftsara_blog/model/post_model.dart';
@@ -13,20 +14,20 @@ Map homePosterMap = {
 };
 
 // category list
-List<CategoryModel> categoryList = [
-  CategoryModel(title: "موسیقی"),
-  CategoryModel(title: "فیلم"),
-  CategoryModel(title: "ورزشی"),
-  CategoryModel(title: "بازی"),
-  CategoryModel(title: "فناوری"),
-  CategoryModel(title: "اخبار"),
-  CategoryModel(title: "آشپزی"),
-  CategoryModel(title: "خودرو"),
-  CategoryModel(title: "سلامتی"),
+List<BlogCategoryModel> blogCategoryList = [
+  BlogCategoryModel(title: "موسیقی"),
+  BlogCategoryModel(title: "فیلم"),
+  BlogCategoryModel(title: "ورزشی"),
+  BlogCategoryModel(title: "بازی"),
+  BlogCategoryModel(title: "فناوری"),
+  BlogCategoryModel(title: "اخبار"),
+  BlogCategoryModel(title: "آشپزی"),
+  BlogCategoryModel(title: "خودرو"),
+  BlogCategoryModel(title: "سلامتی"),
 ];
 
 // category list empty 
-List<CategoryModel> selectedCategoryList = [];
+List<BlogCategoryModel> selectedCategoryList = [];
 
 //post list
 List<PostModel> postList = [
@@ -129,9 +130,9 @@ List<PostModel> postList = [
 ];
 
 // podcast list
-List<PodcastModel> podcastList = [
+List<BlogPodcastModel> podcastList = [
  
-   PodcastModel(
+   BlogPodcastModel(
   id: 1, 
   title: "بازاریابی محتوایی",
   description: """
@@ -143,7 +144,7 @@ List<PodcastModel> podcastList = [
   view: 225, 
   date: "۱ روز قبل"),
 
- PodcastModel(
+ BlogPodcastModel(
   id: 2, 
   title: "رادیو فلاتر", 
   description: """
@@ -155,7 +156,7 @@ List<PodcastModel> podcastList = [
   view: 543, 
   date: "۱ روز قبل"),
 
-   PodcastModel(
+   BlogPodcastModel(
   id: 3, 
   title: "اصول کسب درآمد از برنامه‌نویسی ", 
   description: """
@@ -167,7 +168,7 @@ List<PodcastModel> podcastList = [
   view: 543, 
   date: "۱ روز قبل"),
 
-   PodcastModel(
+   BlogPodcastModel(
   id: 4, 
   title: "nft چیست", 
   description: """
@@ -179,7 +180,7 @@ List<PodcastModel> podcastList = [
   view: 235, 
   date: "۱ روز قبل"),
 
-   PodcastModel(
+   BlogPodcastModel(
   id: 5, 
   title: "آشنایی با لینوکس", 
   description: """
@@ -191,7 +192,7 @@ List<PodcastModel> podcastList = [
   view: 654, 
   date: "۱ روز قبل"),
 
-   PodcastModel(
+   BlogPodcastModel(
   id: 6, 
   title: "معرفی برترین لپ‌تاپ‌های بازی", 
   description: """

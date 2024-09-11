@@ -1,31 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:haftsara_blog/consts/const_colors.dart';
+import 'package:haftsara_blog/components/api_url_constant.dart';
+import 'package:haftsara_blog/components/blog_component.dart';
+import 'package:haftsara_blog/components/const_colors.dart';
+import 'package:get/get.dart';
+import 'package:haftsara_blog/components/const_strings.dart';
+import 'package:haftsara_blog/controller/home_screen_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
+import 'package:haftsara_blog/services/dio_service.dart';
 import 'package:haftsara_blog/view/home_main_body_screen.dart';
 import 'package:haftsara_blog/view/profile_screen.dart';
 import 'package:haftsara_blog/view/write_post.dart';
+import 'package:share_plus/share_plus.dart';
+// import 'package:url_launcher/url_launcher.dart';
+
+
+final GlobalKey<ScaffoldState> _key = GlobalKey();
 
 class HomeScreen extends StatefulWidget {
+
+
   const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-final GlobalKey<ScaffoldState> _key = GlobalKey();
-
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedPageIndex = 0;
+  // int selectedPageIndex = 0;
+  RxInt selectedPageIndex = 0.obs;
 
+  // HomeScreenController homeScreenController = Get.put(HomeScreenController());
   @override
   Widget build(BuildContext context) {
+
+  
+
+    
     var screenSize = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
-    // List<Widget> blogMainScreenPagesList = [
-    //   HomeMainBodyScreen(screenSize: screenSize, textTheme: textTheme),
-    //   WritePost(screenSize: screenSize, textTheme: textTheme),
-    //   ProfileScreen(screenSize: screenSize, textTheme: textTheme),
-    // ];
+
     return Scaffold(
       key: _key,
       backgroundColor: Colors.white,
@@ -61,7 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
               endIndent: 10,
             ),
             ListTile(
-              onTap: null,
+              onTap: () async{
+                await Share.share(Conststrings.shareText);
+              },
               title: Text(
                 "اشتراک‌گذاری بلاگ",
                 style: textTheme.headlineMedium,
@@ -72,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
               endIndent: 10,
             ),
             ListTile(
-              onTap: null,
+              onTap: () {
+                blogLauncherUrl(Conststrings.blogGighubUrl);
+              },
               title: Text(
                 "بلاگ در گیت‌هاب",
                 style: textTheme.headlineMedium,
@@ -111,22 +128,23 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Stack(children: [
         Positioned.fill(
-            child: IndexedStack(
-          index: selectedPageIndex,
+            child: Obx(() => IndexedStack(
+          index: selectedPageIndex.value,
           children: [
             HomeMainBodyScreen(screenSize: screenSize, textTheme: textTheme),
             WritePost(screenSize: screenSize, textTheme: textTheme),
             ProfileScreen(screenSize: screenSize, textTheme: textTheme),
           ],
-        )),
+        ))
+        ),
 
         // bottom navigation
         BottomNavigation(
           screenSize: screenSize,
           changeScreen: (int value) {
-            setState(() {
-              selectedPageIndex = value;
-            });
+           
+              selectedPageIndex.value = value;
+            
           },
         ),
       ]),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:haftsara_blog/consts/const_colors.dart';
-import 'package:haftsara_blog/consts/const_strings.dart';
+import 'package:haftsara_blog/components/const_colors.dart';
+import 'package:haftsara_blog/components/const_strings.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:haftsara_blog/model/fake_data_map.dart';
 
@@ -28,7 +28,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   height: 15,
                 ),
                 SvgPicture.asset(
-                  Assets.images.robotIcon,
+                  Assets.images.robotIcon.path,
                   height: 100,
                 ),
                 const SizedBox(
@@ -64,7 +64,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: GridView.builder(
                         physics: const ClampingScrollPhysics(),
-                        itemCount: categoryList.length,
+                        itemCount: blogCategoryList.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         gridDelegate:
@@ -79,8 +79,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             onTap: () {
                               setState(() {
                                 if (!selectedCategoryList
-                                    .contains(categoryList[index])) {
-                                  selectedCategoryList.add(categoryList[index]);
+                                    .contains(blogCategoryList[index])) {
+                                  selectedCategoryList.add(blogCategoryList[index]);
                                 }
                               });
                             },
@@ -106,7 +106,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       width: 8,
                                     ),
                                     Text(
-                                      categoryList[index].title,
+                                      blogCategoryList[index].title,
                                       style: textTheme.titleLarge,
                                     )
                                   ],
@@ -120,7 +120,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: SvgPicture.asset(
-                    Assets.images.arrowBottom,
+                    Assets.images.arrowBottom.path,
                     height: 60,
                   ),
                 ),
