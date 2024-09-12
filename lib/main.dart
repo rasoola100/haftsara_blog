@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:haftsara_blog/view/article_list_screen.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
@@ -23,16 +24,10 @@ class Haftsara extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate
-      ],
-      supportedLocales: const [
-        Locale('fa'),
-      ],
+      locale: const Locale('fa'),
+      
       theme: ThemeData(
         fontFamily: 'bNazanin',
         textTheme: const TextTheme(
@@ -70,6 +65,11 @@ class Haftsara extends StatelessWidget {
               fontFamily: 'bNazanin',
               fontSize: 16,
               color: Color.fromARGB(255, 90, 89, 89)
+          ), 
+          labelSmall: TextStyle(
+              fontFamily: 'bNazanin',
+              fontSize: 14,
+              color: Color.fromARGB(255, 90, 89, 89)
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -96,7 +96,7 @@ class Haftsara extends StatelessWidget {
       ),
       // home: const SplashScreen(),
       // home: const HomeScreen(),
-      home: const SingleScreen(),
+      home: ArticleListScreen(),
     );
   }
 }
