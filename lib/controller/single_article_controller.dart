@@ -5,21 +5,16 @@ import 'package:haftsara_blog/services/dio_service.dart';
 
 class SingleArticleController extends GetxController {
   RxInt id = RxInt(0);
-  Rx<ArticleInfoModel> articleInfoModel = ArticleInfoModel().obs;
+  // Rx<ArticleInfoModel> articleInfoModel = Rx(ArticleInfoModel());
+  Rx<ArticleInfoModel> articleInfoModel=ArticleInfoModel().obs;
   RxBool loading = false.obs;
 
-  @override
-  onInit() {
-    super.onInit();
-  getArticleInfo();
-    
-  }
-
   getArticleInfo() async {
+    articleInfoModel=ArticleInfoModel().obs;
     loading.value = true;
-    var user_id = '';
+    var userId = '';
     var response = await DioService().getMethod(
-        "${ApiUrlConstant.baseUrl}article/get.php?command=info&id=id&user_id=user_id");
+        "${ApiUrlConstant.baseUrl}article/get.php?command=info&id=$id&user_id=$userId");
     if (response.statusCode == 200) {
       articleInfoModel.value = ArticleInfoModel.fromJson(response.data);
 

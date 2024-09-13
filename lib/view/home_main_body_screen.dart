@@ -9,8 +9,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:haftsara_blog/model/poster_model.dart';
 
-class HomeMainBodyScreen extends StatefulWidget {
-  const HomeMainBodyScreen({
+class HomeMainBodyScreen extends StatelessWidget {
+   HomeMainBodyScreen({
     super.key,
     required this.screenSize,
     required this.textTheme,
@@ -19,19 +19,6 @@ class HomeMainBodyScreen extends StatefulWidget {
   final Size screenSize;
   final TextTheme textTheme;
 
-  @override
-  State<HomeMainBodyScreen> createState() => _HomeMainBodyScreenState();
-
-  
-
-}
-
-
-
-class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
-
-
-  
   HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
   @override
@@ -73,7 +60,7 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                 ),
                 Text(
                   Conststrings.viewHotPosts,
-                  style: widget.textTheme.headlineMedium,
+                  style: textTheme.headlineMedium,
                 )
               ],
             ),
@@ -95,7 +82,7 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                 ),
                 Text(
                   Conststrings.viewHotPodcast,
-                  style: widget.textTheme.headlineMedium,
+                  style: textTheme.headlineMedium,
                 )
               ],
             ),
@@ -116,7 +103,7 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
 
   Widget topArticleVisited() {
     return SizedBox(
-      height: widget.screenSize.height / 2.7,
+      height: screenSize.height / 2.7,
       child: Obx(
         () => ListView.builder(
             itemCount: homeScreenController.topArticleList.length,
@@ -128,8 +115,8 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                   children: [
                     Stack(children: [
                       SizedBox(
-                        height: widget.screenSize.height / 4.5,
-                        width: widget.screenSize.width / 3.5,
+                        height: screenSize.height / 4.5,
+                        width: screenSize.width / 3.5,
                         child: CachedNetworkImage(
                           imageUrl:
                               homeScreenController.topArticleList[index].image!,
@@ -167,7 +154,7 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                               Text(
                                 homeScreenController
                                     .topArticleList[index].author!,
-                                style: widget.textTheme.titleSmall,
+                                style: textTheme.titleSmall,
                               ),
                               Row(
                                 children: [
@@ -175,7 +162,7 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                                     homeScreenController
                                         .topArticleList[index].view
                                         .toString(),
-                                    style: widget.textTheme.titleSmall,
+                                    style: textTheme.titleSmall,
                                   ),
                                   const Icon(
                                     Icons.remove_red_eye,
@@ -193,7 +180,7 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                       height: 5,
                     ),
                     SizedBox(
-                        width: widget.screenSize.width / 3.5,
+                        width: screenSize.width / 3.5,
                         child: Text(
                           homeScreenController.topArticleList[index].title!,
                           textAlign: TextAlign.justify,
@@ -206,11 +193,11 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
             }),
       ),
     );
-  } // end topArticleVisited method widget
-
+  } 
+ // end topArticleVisited method widget
   Widget topPodcast() {
     return SizedBox(
-      height: widget.screenSize.height / 2.7,
+      height: screenSize.height / 2.7,
       child: Obx(
         () => ListView.builder(
             itemCount: homeScreenController.topPodcastList.length,
@@ -221,8 +208,8 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: widget.screenSize.height / 4.5,
-                      width: widget.screenSize.width / 3.5,
+                      height: screenSize.height / 4.5,
+                      width: screenSize.width / 3.5,
                       child: CachedNetworkImage(
                         imageUrl:
                             homeScreenController.topPodcastList[index].poster!,
@@ -259,10 +246,10 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                       height: 14,
                     ),
                     SizedBox(
-                        width: widget.screenSize.width / 3.5,
+                        width: screenSize.width / 3.5,
                         child: Text(
                           homeScreenController.topPodcastList[index].title!,
-                          style: widget.textTheme.headlineSmall,
+                          style: textTheme.headlineSmall,
                           textAlign: TextAlign.center,
                         )),
                   ],
@@ -271,8 +258,8 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
             }),
       ),
     );
-  } // end topPodcast method widget
-  
+  } 
+ // end topPodcast method widget
   Widget blogCategoryList() {
      return SizedBox(
       height: 50,
@@ -305,7 +292,7 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
                           ),
                           Text(
                             homeScreenController.categoryList[index].title!,
-                            style: widget.textTheme.titleSmall,
+                            style: textTheme.titleSmall,
                           )
                         ],
                       ),
@@ -323,7 +310,7 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
        () => homeScreenController.loading.value == false ? Stack(children: [
         Container(
           width: double.infinity,
-          height: widget.screenSize.height / 4,
+          height: screenSize.height / 4,
          
           foregroundDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
@@ -349,13 +336,12 @@ class _HomeMainBodyScreenState extends State<HomeMainBodyScreen> {
           child: Center(
               child: Text(
             homeScreenController.poster.value.title!,
-            style: widget.textTheme.titleLarge,
+            style: textTheme.titleLarge,
           )),
         ),
       ]): const CircularProgressIndicator()
     );
   }
-
 }
 
 

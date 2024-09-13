@@ -10,7 +10,7 @@ class DioService {
         .get(url,
             options: Options(responseType: ResponseType.json, method: "GET"))
         .then((onValue) {
-      log(onValue.toString());
+      // log(onValue.toString());
       return onValue;
     });
   }

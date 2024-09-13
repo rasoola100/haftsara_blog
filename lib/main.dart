@@ -32,9 +32,10 @@ class Haftsara extends StatelessWidget {
         fontFamily: 'bNazanin',
         textTheme: const TextTheme(
           bodyMedium: TextStyle(
-            height: 1.6,
+            height: 2,
             fontSize: 18,
             color: Colors.black,
+            
           ),
           titleMedium: TextStyle(
               fontFamily: 'yekan',

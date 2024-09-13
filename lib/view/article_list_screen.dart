@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:haftsara_blog/components/myComponent.dart';
 import 'package:haftsara_blog/controller/article_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:haftsara_blog/controller/single_article.dart';
+import 'package:haftsara_blog/controller/single_article_controller.dart';
 import 'package:haftsara_blog/view/single_screen.dart';
 
 class ArticleListScreen extends StatelessWidget {
@@ -35,7 +35,8 @@ class ArticleListScreen extends StatelessWidget {
                       onTap: () {
                         singleArticleController.id.value =
                             int.parse(articleController.articleList[index].id.toString());
-                        Get.to( SingleScreen());
+                        // Get.to( SingleScreen());
+                        Get.to(() => SingleScreen());
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
