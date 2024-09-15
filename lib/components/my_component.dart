@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:haftsara_blog/components/text_style.dart';
+import 'package:get/get.dart';
 
 PreferredSize appBar(String title) {
     return PreferredSize(
@@ -25,7 +25,9 @@ PreferredSize appBar(String title) {
                   color: ConstColors.primaryColor.withAlpha(100),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.keyboard_arrow_right),
+                child: InkWell(
+                  onTap: () => Get.back(),
+                  child: const Icon(Icons.keyboard_arrow_right)),
               ),
             ),
           ),

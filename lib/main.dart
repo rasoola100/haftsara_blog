@@ -72,6 +72,19 @@ class Haftsara extends StatelessWidget {
               fontSize: 14,
               color: Color.fromARGB(255, 90, 89, 89)
           ),
+          displaySmall: TextStyle(
+             fontFamily: 'yekan',
+              fontSize: 13,
+              fontWeight: FontWeight.w300,
+              color: Colors.white
+          ),
+           bodySmall: TextStyle(
+             fontFamily: 'yekan',
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: Color.fromARGB(255, 29, 29, 29)
+          ),
+
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -95,9 +108,9 @@ class Haftsara extends StatelessWidget {
           )
         ),
       ),
-      // home: const SplashScreen(),
+      home: const SplashScreen(),
       // home: const HomeScreen(),
-      home: ArticleListScreen(),
+      // home: ArticleListScreen(title: 'مقالات جدید',),
     );
   }
 }

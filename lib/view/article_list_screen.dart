@@ -2,14 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:haftsara_blog/components/myComponent.dart';
+import 'package:haftsara_blog/components/my_component.dart';
 import 'package:haftsara_blog/controller/article_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:haftsara_blog/controller/single_article_controller.dart';
 import 'package:haftsara_blog/view/single_screen.dart';
 
 class ArticleListScreen extends StatelessWidget {
-  ArticleListScreen({super.key});
+  String title;
+  ArticleListScreen({required this.title,super.key});
 
   ArticleController articleController = Get.put(ArticleController());
   SingleArticleController singleArticleController =
@@ -22,7 +23,8 @@ class ArticleListScreen extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Scaffold(
-        appBar: appBar('لیست مقالات'),
+        appBar: appBar(title),
+        
         body: Obx(
           () => Padding(
             padding: const EdgeInsets.all(8.0),
@@ -33,10 +35,9 @@ class ArticleListScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        singleArticleController.id.value =
-                            int.parse(articleController.articleList[index].id.toString());
-                        // Get.to( SingleScreen());
-                        Get.to(() => SingleScreen());
+                        // singleArticleController.id.value =
+                        //     int.parse(articleController.articleList[index].id.toString());
+                       singleArticleController.getArticleInfo(articleController.articleList[index].id);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
