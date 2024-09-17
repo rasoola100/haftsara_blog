@@ -2,13 +2,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:haftsara_blog/components/const_strings.dart';
+import 'package:haftsara_blog/controller/register_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:haftsara_blog/view/category_screen.dart';
 import 'package:validators/validators.dart';
 
 class RegisterIntro extends StatelessWidget {
-  const RegisterIntro({super.key});
+   RegisterIntro({super.key});
+
+  RegisterController registerController = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +69,7 @@ class RegisterIntro extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: TextField(
+                                  controller: registerController.emailTextEditingController,
                                   onChanged: (value) {
                                     log(
                                         "$value is Email = ${isEmail(value)}");
@@ -78,6 +83,7 @@ class RegisterIntro extends StatelessWidget {
                               ),
                               ElevatedButton(
                                   onPressed: () {
+                                    registerController.regeiter();
                                     Navigator.pop(context);
                                     showModalBottomSheet(
                                         isScrollControlled: true,
@@ -109,14 +115,15 @@ class RegisterIntro extends StatelessWidget {
                                                     style: textTheme
                                                         .headlineMedium,
                                                   ),
-                                                  const Padding(
+                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.all(20.0),
+                                                        const EdgeInsets.all(20.0),
                                                     child: TextField(
+                                                      controller: registerController.activeatedCodeTextEditingController,
                                                       onChanged: null,
                                                       textAlign: TextAlign.center,
                                                       decoration:
-                                                          InputDecoration(
+                                                          const InputDecoration(
                                                               label: Text(
                                                                   "کد فعالسازی"),
                                                               hintText:
@@ -129,7 +136,8 @@ class RegisterIntro extends StatelessWidget {
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () {
-                                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const CategoryScreen()));
+                                                      registerController.verify();
+                                                      // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const CategoryScreen()));
                                                     }, 
                                                     child: Text("ثبت", style: textTheme.headlineMedium))
                                                 ],

@@ -9,12 +9,12 @@ import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:haftsara_blog/services/dio_service.dart';
 import 'package:haftsara_blog/view/home_main_body_screen.dart';
 import 'package:haftsara_blog/view/profile_screen.dart';
+import 'package:haftsara_blog/view/register_intro.dart';
 import 'package:haftsara_blog/view/write_post.dart';
 import 'package:share_plus/share_plus.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 
-final GlobalKey<ScaffoldState> _key = GlobalKey();
 
 class HomeScreen extends StatefulWidget {
 
@@ -26,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+final GlobalKey<ScaffoldState> _key = GlobalKey();
   // int selectedPageIndex = 0;
   RxInt selectedPageIndex = 0.obs;
 
@@ -199,7 +200,10 @@ class BottomNavigation extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                    onPressed: () => changeScreen(1),
+                    onPressed: () {
+                      // TODO check login user
+                      Get.to(() => RegisterIntro());
+                    },
                     icon: ImageIcon(
                       Assets.icons.writer.provider(),
                       color: Colors.white,

@@ -1,21 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
+import 'package:haftsara_blog/my_http_override.dart';
 import 'package:haftsara_blog/view/article_list_screen.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
 import 'package:haftsara_blog/view/register_intro.dart';
 import 'package:haftsara_blog/view/single_screen.dart';
 import 'package:haftsara_blog/view/splash_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
 
 // void main() => runApp(const Haftsara());
-void main() {
+void main() async {
+HttpOverrides.global = MyHttpOverride();
+
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: ConstColors.primaryColor,
       statusBarIconBrightness: Brightness.light,
       systemNavigationBarColor: ConstColors.primaryColor,
       systemNavigationBarIconBrightness: Brightness.dark));
+
+  await GetStorage.init();
   runApp(const Haftsara());
 }
 
@@ -27,7 +36,7 @@ class Haftsara extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
-      
+
       theme: ThemeData(
         fontFamily: 'bNazanin',
         textTheme: const TextTheme(
@@ -35,7 +44,6 @@ class Haftsara extends StatelessWidget {
             height: 2,
             fontSize: 18,
             color: Colors.black,
-            
           ),
           titleMedium: TextStyle(
               fontFamily: 'yekan',
@@ -65,26 +73,21 @@ class Haftsara extends StatelessWidget {
           labelMedium: TextStyle(
               fontFamily: 'bNazanin',
               fontSize: 16,
-              color: Color.fromARGB(255, 90, 89, 89)
-          ), 
+              color: Color.fromARGB(255, 90, 89, 89)),
           labelSmall: TextStyle(
               fontFamily: 'bNazanin',
               fontSize: 14,
-              color: Color.fromARGB(255, 90, 89, 89)
-          ),
+              color: Color.fromARGB(255, 90, 89, 89)),
           displaySmall: TextStyle(
-             fontFamily: 'yekan',
+              fontFamily: 'yekan',
               fontSize: 13,
               fontWeight: FontWeight.w300,
-              color: Colors.white
-          ),
-           bodySmall: TextStyle(
-             fontFamily: 'yekan',
+              color: Colors.white),
+          bodySmall: TextStyle(
+              fontFamily: 'yekan',
               fontSize: 13,
               fontWeight: FontWeight.w400,
-              color: Color.fromARGB(255, 29, 29, 29)
-          ),
-
+              color: Color.fromARGB(255, 29, 29, 29)),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -102,11 +105,9 @@ class Haftsara extends StatelessWidget {
         ),
         // TextField style
         inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey, width: 1.1),
-            borderRadius: BorderRadius.circular(15)
-          )
-        ),
+            border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 1.1),
+                borderRadius: BorderRadius.circular(15))),
       ),
       home: const SplashScreen(),
       // home: const HomeScreen(),
