@@ -5,6 +5,7 @@ import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:get/get.dart';
 import 'package:haftsara_blog/components/const_strings.dart';
 import 'package:haftsara_blog/controller/home_screen_controller.dart';
+import 'package:haftsara_blog/controller/register_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:haftsara_blog/services/dio_service.dart';
 import 'package:haftsara_blog/view/home_main_body_screen.dart';
@@ -14,11 +15,7 @@ import 'package:haftsara_blog/view/write_post.dart';
 import 'package:share_plus/share_plus.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
-
-
 class HomeScreen extends StatefulWidget {
-
-
   const HomeScreen({super.key});
 
   @override
@@ -26,17 +23,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-final GlobalKey<ScaffoldState> _key = GlobalKey();
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   // int selectedPageIndex = 0;
   RxInt selectedPageIndex = 0.obs;
 
   // HomeScreenController homeScreenController = Get.put(HomeScreenController());
+
+  // RegisterController registerController =
+  //     Get.put(RegisterController(), permanent: false);
   @override
   Widget build(BuildContext context) {
-
-  
-
-    
     var screenSize = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
 
@@ -75,7 +71,7 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
               endIndent: 10,
             ),
             ListTile(
-              onTap: () async{
+              onTap: () async {
                 await Share.share(Conststrings.shareText);
               },
               title: Text(
@@ -130,22 +126,20 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
       body: Stack(children: [
         Positioned.fill(
             child: Obx(() => IndexedStack(
-          index: selectedPageIndex.value,
-          children: [
-            HomeMainBodyScreen(screenSize: screenSize, textTheme: textTheme),
-            WritePost(screenSize: screenSize, textTheme: textTheme),
-            ProfileScreen(screenSize: screenSize, textTheme: textTheme),
-          ],
-        ))
-        ),
+                  index: selectedPageIndex.value,
+                  children: [
+                    HomeMainBodyScreen(
+                        screenSize: screenSize, textTheme: textTheme),
+                    WritePost(screenSize: screenSize, textTheme: textTheme),
+                    ProfileScreen(screenSize: screenSize, textTheme: textTheme),
+                  ],
+                ))),
 
         // bottom navigation
         BottomNavigation(
           screenSize: screenSize,
           changeScreen: (int value) {
-           
-              selectedPageIndex.value = value;
-            
+            selectedPageIndex.value = value;
           },
         ),
       ]),
@@ -202,7 +196,9 @@ class BottomNavigation extends StatelessWidget {
                 IconButton(
                     onPressed: () {
                       // TODO check login user
-                      Get.to(() => RegisterIntro());
+                      // registerController.checkLogin();
+                      Get.find<RegisterController>().checkLogin();
+                      // Get.to(() => RegisterIntro());
                     },
                     icon: ImageIcon(
                       Assets.icons.writer.provider(),

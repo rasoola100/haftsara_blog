@@ -9,11 +9,13 @@ import 'package:haftsara_blog/controller/single_article_controller.dart';
 import 'package:haftsara_blog/view/article_list_screen.dart';
 
 class SingleScreen extends StatelessWidget {
-   SingleScreen({super.key});
+  SingleScreen({super.key});
 
-  SingleArticleController singleArticleController =
-      Get.put(SingleArticleController());
-  ArticleController articleController = Get.put(ArticleController());
+  // SingleArticleController singleArticleController =
+  // Get.put(SingleArticleController());
+  var singleArticleController = Get.find<SingleArticleController>();
+
+  // ArticleController articleController = Get.put(ArticleController());
 
   // @override
   @override
@@ -181,9 +183,9 @@ class SingleScreen extends StatelessWidget {
                                 onTap: () async {
                                   var catId = singleArticleController
                                       .categoryList[index].id!;
-                                  // await Get.find<ArticleController>()
-                                      // .getArticleListByCatId(catId);
-                                    await articleController.getArticleListByCatId(catId);
+                                  await Get.find<ArticleController>()
+                                      .getArticleListByCatId(catId);
+                                  // await articleController.getArticleListByCatId(catId);
                                   Get.to(() => ArticleListScreen(
                                       title: singleArticleController
                                           .categoryList[index].title!));
@@ -233,10 +235,10 @@ class SingleScreen extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return InkWell(
-                                onTap: (){
+                                onTap: () {
                                   singleArticleController.getArticleInfo(
-                                    singleArticleController.relatedArticleList[index].id );
-                                 
+                                      singleArticleController
+                                          .relatedArticleList[index].id);
                                 },
                                 child: Column(
                                   children: [
@@ -246,7 +248,8 @@ class SingleScreen extends StatelessWidget {
                                       child: CachedNetworkImage(
                                         imageUrl: singleArticleController
                                             .relatedArticleList[index].image!,
-                                        imageBuilder: (contetxt, imageProvider) {
+                                        imageBuilder:
+                                            (contetxt, imageProvider) {
                                           return Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Stack(children: [
@@ -265,7 +268,8 @@ class SingleScreen extends StatelessWidget {
                                                     BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(15),
-                                                  gradient: const LinearGradient(
+                                                  gradient:
+                                                      const LinearGradient(
                                                     colors: ConstColors
                                                         .homePosterGradientColor,
                                                     begin: Alignment.topCenter,
@@ -287,8 +291,8 @@ class SingleScreen extends StatelessWidget {
                                                           .relatedArticleList[
                                                               index]
                                                           .author!,
-                                                      style:
-                                                          textTheme.displaySmall,
+                                                      style: textTheme
+                                                          .displaySmall,
                                                     ),
                                                     Row(
                                                       children: [

@@ -6,6 +6,7 @@ import 'package:haftsara_blog/components/my_component.dart';
 import 'package:haftsara_blog/controller/article_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:haftsara_blog/controller/single_article_controller.dart';
+import 'package:haftsara_blog/main.dart';
 import 'package:haftsara_blog/view/single_screen.dart';
 
 class ArticleListScreen extends StatelessWidget {
@@ -34,10 +35,11 @@ class ArticleListScreen extends StatelessWidget {
                   itemCount: articleController.articleList.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async{
                         // singleArticleController.id.value =
                         //     int.parse(articleController.articleList[index].id.toString());
-                       singleArticleController.getArticleInfo(articleController.articleList[index].id);
+                      await singleArticleController.getArticleInfo(articleController.articleList[index].id);
+                       Get.toNamed(routeSingleArticle);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),

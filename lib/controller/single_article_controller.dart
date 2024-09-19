@@ -35,7 +35,7 @@ class SingleArticleController extends GetxController {
 
       loading.value = false;
     }
-    Get.to(() => SingleScreen());
+    // Get.to(() => SingleScreen());
 
   }// end of getArticleInfo method
 }

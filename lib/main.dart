@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:haftsara_blog/binding.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
+import 'package:haftsara_blog/controller/register_controller.dart';
 import 'package:haftsara_blog/my_http_override.dart';
 import 'package:haftsara_blog/view/article_list_screen.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
@@ -34,6 +36,11 @@ class Haftsara extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      // initialBinding: RegisterBinding(),
+      getPages: [
+        GetPage(name: routeHomeScreen, page: () => const HomeScreen(), binding: RegisterBinding()),
+        GetPage(name: routeSingleArticle, page: () => SingleScreen(), binding: ArticleBinding()),
+      ],
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
 
@@ -115,3 +122,6 @@ class Haftsara extends StatelessWidget {
     );
   }
 }
+
+const String routeHomeScreen = "/homeScreen";
+const String routeSingleArticle = '/singleArticle';

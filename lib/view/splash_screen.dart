@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:haftsara_blog/main.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-   runHomePageAfterSplash(context);
+    runHomePageAfterSplash(context);
   }
 
   @override
@@ -47,8 +49,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void runHomePageAfterSplash(context) {
     Future.delayed(const Duration(seconds: 3)).then((onValue) {
       if (context.mounted) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
+        // Navigator.of(context).pushReplacement(
+        //     MaterialPageRoute(builder: (context) => const HomeScreen()));
+        Get.offAndToNamed(routeHomeScreen);
       }
     });
   }
