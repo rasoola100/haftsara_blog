@@ -13,6 +13,10 @@ class DioService {
         .then((onValue) {
       // log(onValue.toString());
       return onValue;
+    }).catchError((error) {
+      if(error is DioException) {
+        return error.response!;
+      }
     });
   }
 
@@ -26,6 +30,10 @@ class DioService {
           log(onValue.data.toString());
           log(onValue.statusCode.toString());
           return onValue;
+        }).catchError((error){
+          if(error is DioException) {
+            return error.response!;
+          }
         });
   }
 }

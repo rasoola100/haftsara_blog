@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (context.mounted) {
         // Navigator.of(context).pushReplacement(
         //     MaterialPageRoute(builder: (context) => const HomeScreen()));
-        Get.offAndToNamed(routeHomeScreen);
+        Get.offAndToNamed(NameRoute.routeHomeScreen);
       }
     });
   }

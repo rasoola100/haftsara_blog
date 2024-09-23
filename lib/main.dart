@@ -9,6 +9,7 @@ import 'package:haftsara_blog/controller/register_controller.dart';
 import 'package:haftsara_blog/my_http_override.dart';
 import 'package:haftsara_blog/view/article_list_screen.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
+import 'package:haftsara_blog/view/manage_article.dart';
 import 'package:haftsara_blog/view/register_intro.dart';
 import 'package:haftsara_blog/view/single_screen.dart';
 import 'package:haftsara_blog/view/splash_screen.dart';
@@ -17,8 +18,7 @@ import 'package:get_storage/get_storage.dart';
 
 // void main() => runApp(const Haftsara());
 void main() async {
-HttpOverrides.global = MyHttpOverride();
-
+  HttpOverrides.global = MyHttpOverride();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: ConstColors.primaryColor,
@@ -38,8 +38,18 @@ class Haftsara extends StatelessWidget {
     return GetMaterialApp(
       // initialBinding: RegisterBinding(),
       getPages: [
-        GetPage(name: routeHomeScreen, page: () => const HomeScreen(), binding: RegisterBinding()),
-        GetPage(name: routeSingleArticle, page: () => SingleScreen(), binding: ArticleBinding()),
+        GetPage(
+            name: NameRoute.routeHomeScreen,
+            page: () => const HomeScreen(),
+            binding: RegisterBinding()),
+        GetPage(
+            name: NameRoute.routeSingleArticle,
+            page: () => SingleScreen(),
+            binding: ArticleBinding()),
+        GetPage(
+            name: NameRoute.routeManageArticle,
+            page: () => ManageArticle(),
+            binding: ArticleManagerBinding())
       ],
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
@@ -123,5 +133,8 @@ class Haftsara extends StatelessWidget {
   }
 }
 
-const String routeHomeScreen = "/homeScreen";
-const String routeSingleArticle = '/singleArticle';
+class NameRoute {
+  static String routeHomeScreen = "/homeScreen";
+  static String routeSingleArticle = '/singleArticle';
+  static String routeManageArticle = '/manageArticle';
+}

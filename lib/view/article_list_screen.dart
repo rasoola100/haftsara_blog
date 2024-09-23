@@ -39,7 +39,7 @@ class ArticleListScreen extends StatelessWidget {
                         // singleArticleController.id.value =
                         //     int.parse(articleController.articleList[index].id.toString());
                       await singleArticleController.getArticleInfo(articleController.articleList[index].id);
-                       Get.toNamed(routeSingleArticle);
+                       Get.toNamed(NameRoute.routeSingleArticle);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),

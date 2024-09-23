@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:haftsara_blog/components/api_url_constant.dart';
 import 'package:haftsara_blog/components/storage_const.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
+import 'package:haftsara_blog/main.dart';
 import 'package:haftsara_blog/services/dio_service.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
 import 'package:haftsara_blog/view/register_intro.dart';
@@ -16,7 +17,7 @@ class RegisterController extends GetxController {
   TextEditingController activeatedCodeTextEditingController =
       TextEditingController();
   var email = '';
-  var user_id = '';
+  var userId = '';
   regeiter() async {
     Map<String, dynamic> map = {
       'email': emailTextEditingController.text,
@@ -24,15 +25,19 @@ class RegisterController extends GetxController {
     };
     var response =
         await DioService().postMethod(map, ApiUrlConstant.postRegister);
-    email = emailTextEditingController.text;
-    user_id = response.data['user_id'];
+    if (response.statusCode == 200) {
+      email = emailTextEditingController.text;
+      userId = response.data['user_id'];
+    } else if (response.statusCode == 400) {
+      debugPrint('error 400');  
+    }
     // print(response);
   }
 
   verify() async {
     Map<String, dynamic> map = {
       'email': email,
-      'user_id': user_id,
+      'user_id': userId,
       'code': activeatedCodeTextEditingController.text,
       'command': 'verify'
     };
@@ -110,28 +115,50 @@ class RegisterController extends GetxController {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 GestureDetector(
-                  onTap: () => debugPrint('write article'),
+                  onTap: (() {
+                  // debugPrint('write article');
+                  Get.toNamed(NameRoute.routeManageArticle);
+                  }),
                   child: Container(
-                    color:const Color.fromARGB(255, 228, 228, 222),
-                    child: Row(children: [
-                      Image.asset(Assets.icons.writer.path, height: 35,),
-                      const SizedBox(width: 5,),
-                      const Text('مدیریت مقاله‌ها', style: TextStyle(fontFamily: 'yekan'),)
-                    ],),
+                    color: const Color.fromARGB(255, 228, 228, 222),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          Assets.icons.writer.path,
+                          height: 35,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text(
+                          'مدیریت مقاله‌ها',
+                          style: TextStyle(fontFamily: 'yekan'),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 InkWell(
                   onTap: () => debugPrint("record podcast"),
                   child: Container(
                     color: const Color.fromARGB(255, 228, 228, 222),
-                    child: Row(children: [
-                      Image.asset(Assets.icons.podcast.path, height: 35,),
-                      const SizedBox(width: 5,),
-                      const Text('مدیریت پادکست‌ها', style: TextStyle(fontFamily: 'yekan'),)
-                    ],),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          Assets.icons.podcast.path,
+                          height: 35,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text(
+                          'مدیریت پادکست‌ها',
+                          style: TextStyle(fontFamily: 'yekan'),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-
               ],
             ),
           ],

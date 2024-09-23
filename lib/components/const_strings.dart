@@ -15,4 +15,8 @@ static const String shareText = """
 شما هم می‌توانید آن را داشته باشید./n
 www.haftsara.ir
 """;
+static const String manageArticleText = """ 
+شما تاکنون مقاله‌ای منتشر نکرده‌اید.
+برای افزودن مقاله جدید می‌توانید از دکمه زیر استفاده کنید.
+""";
 }
