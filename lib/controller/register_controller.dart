@@ -49,8 +49,8 @@ class RegisterController extends GetxController {
     switch (status) {
       case 'verified':
         var box = GetStorage();
-        box.write(token, response.data['token']);
-        box.write(userId, response.data['user_id']);
+        box.write(StorageConst.token, response.data['token']);
+        box.write(StorageConst.userId, response.data['user_id']);
         // Get.to(() => const HomeScreen());
         Get.offAll(() => const HomeScreen());
         debugPrint('ok login');
@@ -65,7 +65,7 @@ class RegisterController extends GetxController {
   }
 
   checkLogin() {
-    if (GetStorage().read(token) == null) {
+    if (GetStorage().read(StorageConst.token) == null) {
       Get.to(() => RegisterIntro());
     } else {
       // debugPrint('logined');

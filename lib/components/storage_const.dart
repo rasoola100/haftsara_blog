@@ -1,3 +1,7 @@
 
-String token = 'token';
-String userId = 'userId';
+class StorageConst {
+
+static String token = 'token';
+static String userId = 'userId';
+
+}
