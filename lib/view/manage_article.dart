@@ -6,6 +6,7 @@ import 'package:haftsara_blog/components/const_strings.dart';
 import 'package:haftsara_blog/components/my_component.dart';
 import 'package:haftsara_blog/controller/manage_article_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
+import 'package:haftsara_blog/main.dart';
 
 // ignore: must_be_immutable
 class ManageArticle extends StatelessWidget {
@@ -17,7 +18,7 @@ class ManageArticle extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return SafeArea(
-      child: Scaffold(
+      child: Scaffold( 
         appBar: appBar('مدیریت مقاله‌ها'),
         body: Obx(
           () => manageArticleController.loading.value
@@ -31,9 +32,10 @@ class ManageArticle extends StatelessWidget {
                             itemCount:
                                 manageArticleController.articleList.length,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
+                              return InkWell(
                                 onTap: () async {
                                   // TODO route to single manage
+
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
@@ -133,7 +135,9 @@ class ManageArticle extends StatelessWidget {
               style: ButtonStyle(
                   fixedSize: WidgetStatePropertyAll(Size(Get.width / 5, 50))
                   ),
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(NameRoute.routeSingleManageArticle);
+              },
               child: Text(
                 'افزودن مقاله جدید',
                 style: textTheme.displaySmall,

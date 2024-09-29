@@ -6,10 +6,8 @@ import 'package:haftsara_blog/controller/article_controller.dart';
 import 'package:haftsara_blog/controller/home_screen_controller.dart';
 import 'package:haftsara_blog/controller/single_article_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
-import 'package:haftsara_blog/model/fake_data_map.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:haftsara_blog/model/poster_model.dart';
 import 'package:haftsara_blog/view/article_list_screen.dart';
 
 class HomeMainBodyScreen extends StatelessWidget {
@@ -125,6 +123,14 @@ class HomeMainBodyScreen extends StatelessWidget {
                     // Get.find<SingleArticleController>().getArticleInfo(id);
                     singleArticleController.getArticleInfo(id);
                   },
+                  // TODO دکمه بالا به صورت زیر از NameRoute استفاده کند
+                  //  onTap: () async{
+                  //   var id = homeScreenController.topArticleList[index].id;
+                  //   // Get.find<SingleArticleController>().getArticleInfo(id);
+                   
+                  //   await singleArticleController.getArticleInfo(id);
+                  //   Get.toNamed(NameRoute.routeSingleArticle);
+                  
                   child: Column(
                     children: [
                       Stack(children: [

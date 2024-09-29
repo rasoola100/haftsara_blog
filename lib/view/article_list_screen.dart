@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,6 @@ import 'package:haftsara_blog/controller/article_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:haftsara_blog/controller/single_article_controller.dart';
 import 'package:haftsara_blog/main.dart';
-import 'package:haftsara_blog/view/single_screen.dart';
 
 class ArticleListScreen extends StatelessWidget {
   String title;

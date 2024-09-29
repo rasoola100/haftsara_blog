@@ -1,16 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:haftsara_blog/binding.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
-import 'package:haftsara_blog/controller/register_controller.dart';
 import 'package:haftsara_blog/my_http_override.dart';
-import 'package:haftsara_blog/view/article_list_screen.dart';
+import 'package:haftsara_blog/view/article_content_editor.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
+import 'package:haftsara_blog/view/html_editor.dart';
 import 'package:haftsara_blog/view/manage_article.dart';
-import 'package:haftsara_blog/view/register_intro.dart';
+import 'package:haftsara_blog/view/single_manage_Article_screen.dart';
 import 'package:haftsara_blog/view/single_screen.dart';
 import 'package:haftsara_blog/view/splash_screen.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +48,10 @@ class Haftsara extends StatelessWidget {
         GetPage(
             name: NameRoute.routeManageArticle,
             page: () => ManageArticle(),
+            binding: ArticleManagerBinding()),
+        GetPage(
+            name: NameRoute.routeSingleManageArticle,
+            page: () => SingleManageArticleScreen(),
             binding: ArticleManagerBinding())
       ],
       debugShowCheckedModeBanner: false,
@@ -105,6 +108,11 @@ class Haftsara extends StatelessWidget {
               fontSize: 13,
               fontWeight: FontWeight.w400,
               color: Color.fromARGB(255, 29, 29, 29)),
+              bodyLarge: TextStyle(
+                fontFamily: 'bNazanin',
+                fontSize: 18,
+                color: Color.fromARGB(255, 110, 110, 110),
+              ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -126,7 +134,8 @@ class Haftsara extends StatelessWidget {
                 borderSide: const BorderSide(color: Colors.grey, width: 1.1),
                 borderRadius: BorderRadius.circular(15))),
       ),
-      home: const SplashScreen(),
+      // home: const SplashScreen(),
+      home:  ArticleContentEditor(),
       // home: const HomeScreen(),
       // home: ArticleListScreen(title: 'مقالات جدید',),
     );
@@ -137,4 +146,5 @@ class NameRoute {
   static String routeHomeScreen = "/homeScreen";
   static String routeSingleArticle = '/singleArticle';
   static String routeManageArticle = '/manageArticle';
+  static String routeSingleManageArticle = '/singleManageArticleScreen';
 }

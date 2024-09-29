@@ -4,7 +4,6 @@ import 'package:haftsara_blog/model/article_info_model.dart';
 import 'package:haftsara_blog/model/article_model.dart';
 import 'package:haftsara_blog/model/category_model.dart';
 import 'package:haftsara_blog/services/dio_service.dart';
-import 'package:haftsara_blog/view/single_screen.dart';
 
 class SingleArticleController extends GetxController {
   RxInt id = RxInt(0);

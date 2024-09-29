@@ -1,7 +1,5 @@
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:haftsara_blog/model/blog_model.dart';
-import 'package:haftsara_blog/model/category_model.dart';
-import 'package:haftsara_blog/model/podcast_model.dart';
 import 'package:haftsara_blog/model/post_model.dart';
 
 // poster map

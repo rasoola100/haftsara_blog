@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:haftsara_blog/components/const_strings.dart';
 import 'package:haftsara_blog/controller/register_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
-import 'package:haftsara_blog/view/category_screen.dart';
 import 'package:validators/validators.dart';
 
 class RegisterIntro extends StatelessWidget {

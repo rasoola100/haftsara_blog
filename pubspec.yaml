@@ -48,6 +48,8 @@ dependencies:
   dio: ^5.7.0
   cached_network_image: ^3.4.1
   flutter_widget_from_html: ^0.15.2
+  file_picker: ^8.1.2
+  html_editor_enhanced: ^2.6.0
 
 
 dev_dependencies:

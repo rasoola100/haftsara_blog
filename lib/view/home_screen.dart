@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:haftsara_blog/components/api_url_constant.dart';
 import 'package:haftsara_blog/components/blog_component.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:get/get.dart';
 import 'package:haftsara_blog/components/const_strings.dart';
-import 'package:haftsara_blog/controller/home_screen_controller.dart';
 import 'package:haftsara_blog/controller/register_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
-import 'package:haftsara_blog/services/dio_service.dart';
 import 'package:haftsara_blog/view/home_main_body_screen.dart';
 import 'package:haftsara_blog/view/profile_screen.dart';
-import 'package:haftsara_blog/view/register_intro.dart';
 import 'package:haftsara_blog/view/write_post.dart';
 import 'package:share_plus/share_plus.dart';
 // import 'package:url_launcher/url_launcher.dart';
