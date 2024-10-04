@@ -3,13 +3,16 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
+import 'package:haftsara_blog/controller/article_controller.dart';
 import 'package:haftsara_blog/controller/file_controller.dart';
+import 'package:haftsara_blog/controller/home_screen_controller.dart';
 import 'package:haftsara_blog/controller/manage_article_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:haftsara_blog/services/pick_file.dart';
 import 'package:haftsara_blog/view/article_content_editor.dart';
+import 'package:haftsara_blog/view/article_list_screen.dart';
 
 // ignore: must_be_immutable
 class SingleManageArticleScreen extends StatelessWidget {
@@ -17,7 +20,6 @@ class SingleManageArticleScreen extends StatelessWidget {
 
   var manageArticleController = Get.find<ManageArticleController>();
   FileController fileController = Get.put(FileController());
-   
 
   // @override
   @override
@@ -61,7 +63,10 @@ class SingleManageArticleScreen extends StatelessWidget {
                                 );
                               },
                             )
-                          : Image.file(File(fileController.file.value.path!), fit: BoxFit.cover,),
+                          : Image.file(
+                              File(fileController.file.value.path!),
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     Positioned(
                       top: 0,
@@ -160,20 +165,18 @@ class SingleManageArticleScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
                       manageArticleController.articleInfoModel.value.title ??=
-                          "محتوای مقاله شما",
+                          "عنوان مقاله شما",
                       // manageArticleController.articleInfoModel.value.title != null
                       style: textTheme.bodyLarge,
                     ),
                   ),
                 ),
-
                 const SizedBox(
                   height: 15,
                 ),
@@ -202,7 +205,6 @@ class SingleManageArticleScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Align(
@@ -215,12 +217,13 @@ class SingleManageArticleScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(
                   height: 15,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    chooseCatsBottomSheet(textTheme);
+                  },
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(12, 5, 12, 5),
                     child: Row(
@@ -241,71 +244,17 @@ class SingleManageArticleScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 10),
-                  child: HtmlWidget(
-                    '''
-                          <p style="text-align: justify">
-                            ${manageArticleController.articleInfoModel.value.content ??= ''}
-                          </p>
-                          ''',
-                    textStyle: textTheme.bodyMedium,
-                    enableCaching: true,
-                    onLoadingBuilder: (context, element, loadingProgress) {
-                      return const CircularProgressIndicator();
-                    },
+                  padding: const EdgeInsets.all(14.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      manageArticleController.articleInfoModel.value.catName ??=
+                          "دسته‌بندی مقاله انتخاب نشده است",
+                      style: textTheme.bodyLarge,
+                    ),
                   ),
                 ),
-                // const Padding(
-                //   padding: EdgeInsets.all(8),
-                //   child: Divider(),
-                // ),
-
-                // category list-----------------------------------------
-                // SizedBox(
-                //   height: 50,
-                //   child: Padding(
-                //     padding: const EdgeInsets.only(right: 8.0),
-                //     child: ListView.builder(
-                //       itemCount:
-                //           manageArticleController.categoryList.length,
-                //       scrollDirection: Axis.horizontal,
-                //       itemBuilder: (context, index) {
-                //         return InkWell(
-                //           onTap: () async {
-                //             var catId = manageArticleController
-                //                 .categoryList[index].id!;
-                //             await Get.find<ArticleController>()
-                //                 .getArticleListByCatId(catId);
-                //             // await articleController.getArticleListByCatId(catId);
-                //             Get.to(() => ArticleListScreen(
-                //                 title: manageArticleController
-                //                     .categoryList[index].title!));
-                //           },
-                //           child: Padding(
-                //             padding: const EdgeInsets.only(left: 8.0),
-                //             child: Container(
-                //               decoration: BoxDecoration(
-                //                   borderRadius: BorderRadius.circular(15),
-                //                   color: const Color.fromARGB(
-                //                       255, 104, 104, 104)),
-                //               child: Center(
-                //                   child: Padding(
-                //                 padding: const EdgeInsets.all(8.0),
-                //                 child: Text(
-                //                   manageArticleController
-                //                       .categoryList[index].title!,
-                //                   style: textTheme.titleSmall,
-                //                 ),
-                //               )),
-                //             ),
-                //           ),
-                //         );
-                //       },
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -314,7 +263,91 @@ class SingleManageArticleScreen extends StatelessWidget {
     );
   }
 
-   getTitle() {
+  Widget cats(TextTheme textTheme) {
+    var homeScreenController = Get.find<HomeScreenController>();
+    return SizedBox(
+      height: Get.height / 1.9,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: GridView.builder(
+          itemCount: homeScreenController.categoryList.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+               
+                // manageArticleController.articleInfoModel.value.catId =
+                //     homeScreenController.categoryList[index].id;
+                    
+                // manageArticleController.articleInfoModel.value.catName =
+                //     homeScreenController.categoryList[index].title;
+
+                manageArticleController.articleInfoModel.update((fn) {
+                  fn!.catId =  homeScreenController.categoryList[index].id;
+                  fn.catName =  homeScreenController.categoryList[index].title;
+                });
+
+                Get.back();
+                
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: ConstColors.primaryColor),
+                  child: Center(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        homeScreenController.categoryList[index].title!,
+                        style: textTheme.titleSmall,
+                      ),
+                    ),
+                  )),
+                ),
+              ),
+            );
+          },
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
+        ),
+      ),
+    );
+  }
+
+  chooseCatsBottomSheet(TextTheme textTheme) {
+    Get.bottomSheet(
+      backgroundColor: Colors.white,
+      Container(
+        height: Get.height / 1.5,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const Text('انتخاب دسته‌بندی'),
+              const SizedBox(
+                height: 20,
+              ),
+              cats(textTheme),
+            ],
+          ),
+        ),
+      ),
+      isScrollControlled: true,
+      persistent: true,
+    );
+  }
+
+  getTitle() {
     Get.defaultDialog(
       title: 'عنوان مقاله',
       titleStyle: const TextStyle(color: Colors.white),
@@ -325,22 +358,26 @@ class SingleManageArticleScreen extends StatelessWidget {
         keyboardType: TextInputType.text,
         decoration: const InputDecoration(
           hintText: 'اینجا بنویسید',
-          hintStyle: TextStyle(color: Color.fromARGB(255, 196, 195, 195), fontSize: 14),
-          
+          hintStyle: TextStyle(
+              color: Color.fromARGB(255, 196, 195, 195), fontSize: 14),
         ),
         style: const TextStyle(color: Colors.white),
       ),
       confirm: ElevatedButton(
-        onPressed: () {
-          manageArticleController.updateTitle();
-          Get.back();
-        }, 
-        child: const Text("ثبت", style: TextStyle(color: Colors.white),)),
+          onPressed: () {
+            manageArticleController.updateTitle();
+            Get.back();
+          },
+          child: const Text(
+            "ثبت",
+            style: TextStyle(color: Colors.white),
+          )),
       cancel: ElevatedButton(
-        onPressed: () => Get.back(), 
-         child: const Text("انصراف", style: TextStyle(color: Colors.white),)),
+          onPressed: () => Get.back(),
+          child: const Text(
+            "انصراف",
+            style: TextStyle(color: Colors.white),
+          )),
     );
-   }
-
-
+  }
 }
