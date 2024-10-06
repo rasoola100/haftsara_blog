@@ -5,6 +5,7 @@ class ApiUrlConstant {
   static const getArticleList = "${baseUrl}article/get.php?command=new&user_id=";
   static const publishedByMe = "${baseUrl}article/get.php?command=published_by_me&user_id=";
   static const postRegister = "${baseUrl}register/action.php";
+  static const postArticle = "${baseUrl}article/post.php";
 
 
 }

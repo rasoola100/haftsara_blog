@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:haftsara_blog/components/api_url_constant.dart';
+import 'package:haftsara_blog/components/storage_const.dart';
+import 'package:haftsara_blog/controller/file_controller.dart';
 import 'package:haftsara_blog/model/article_info_model.dart';
 import 'package:haftsara_blog/model/article_model.dart';
 import 'package:haftsara_blog/model/category_model.dart';
 import 'package:haftsara_blog/services/dio_service.dart';
+import 'package:dio/dio.dart' as dio;
 
 class ManageArticleController extends GetxController {
   // RxList<ArticleModel> articleList = RxList();
@@ -23,7 +29,7 @@ class ManageArticleController extends GetxController {
   getManageArticle() async {
     loading.value = true;
     var response = await DioService().getMethod(
-        '${ApiUrlConstant.publishedByMe}1');
+        ApiUrlConstant.publishedByMe + GetStorage().read(StorageConst.userId));
         //GetStorage().read(StorageConst.userId)
     if (response.statusCode == 200) {
       response.data.forEach((element) {
@@ -38,6 +44,23 @@ class ManageArticleController extends GetxController {
     fn?.title = titleTextEditingController.text;
    });
   //  titleTextEditingController.text = '';
+  }
+
+  storeArticle() async{
+    var fileController = Get.find<FileController>();
+    loading.value = true;
+    Map<String, dynamic> map = {
+      'title': articleInfoModel.value.title,
+      'content': articleInfoModel.value.content,
+      'cat_id': articleInfoModel.value.catId,
+      'user_id': GetStorage().read(StorageConst.userId),
+      'tag_list': "[]",
+      'image': await dio.MultipartFile.fromFile(fileController.file.value.path!),
+      'command': 'store'
+    };
+    var response = await DioService().postMethod(map, ApiUrlConstant.postArticle);
+    log(response.data);
+    loading.value = false;
   }
 
 }

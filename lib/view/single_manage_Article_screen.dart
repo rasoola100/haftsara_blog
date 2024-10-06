@@ -71,6 +71,7 @@ class SingleManageArticleScreen extends StatelessWidget {
                     Positioned(
                       top: 0,
                       left: 0,
+                      right: 0,
                       child: Container(
                           height: 60,
                           width: screenSize.width,
@@ -255,9 +256,41 @@ class SingleManageArticleScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+               
+        const SizedBox(height: 50,),
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: 
+        Padding(
+          padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+          child: InkWell(
+                    onTap: () async{
+                      await manageArticleController.storeArticle();
+                     
+                    },
+                    borderRadius: BorderRadius.circular(50),
+                   splashColor: Colors.greenAccent,
+                    child: Container(
+                      
+                      height: 50,
+                      decoration: const BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          boxShadow: [
+                            BoxShadow(blurRadius: 1, offset: Offset(1, 1))
+                          ]),
+                      child: Center(
+                          child: Text(
+                            manageArticleController.loading.value ? 
+                            'لطفا صبر کنید...'
+                            : 'ارسال مطلب' ,
+                        style: const TextStyle(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      )),
+                    ),
+                  ),
         ),
       ),
     );
@@ -274,20 +307,12 @@ class SingleManageArticleScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-               
-                // manageArticleController.articleInfoModel.value.catId =
-                //     homeScreenController.categoryList[index].id;
-                    
-                // manageArticleController.articleInfoModel.value.catName =
-                //     homeScreenController.categoryList[index].title;
-
                 manageArticleController.articleInfoModel.update((fn) {
-                  fn!.catId =  homeScreenController.categoryList[index].id;
-                  fn.catName =  homeScreenController.categoryList[index].title;
+                  fn!.catId = homeScreenController.categoryList[index].id;
+                  fn.catName = homeScreenController.categoryList[index].title;
                 });
 
                 Get.back();
-                
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),

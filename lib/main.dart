@@ -8,6 +8,7 @@ import 'package:haftsara_blog/my_http_override.dart';
 import 'package:haftsara_blog/view/article_content_editor.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
 import 'package:haftsara_blog/view/manage_article.dart';
+import 'package:haftsara_blog/view/podcast/single_podcast.dart';
 import 'package:haftsara_blog/view/single_manage_Article_screen.dart';
 import 'package:haftsara_blog/view/single_screen.dart';
 import 'package:flutter/services.dart';
@@ -133,8 +134,8 @@ class Haftsara extends StatelessWidget {
                 borderSide: const BorderSide(color: Colors.grey, width: 1.1),
                 borderRadius: BorderRadius.circular(15))),
       ),
-      home: const SplashScreen(),
-      // home:  ArticleContentEditor(),
+      // home: const SplashScreen(),
+      home:  const SinglePodcast(),
       // home: const HomeScreen(),
       // home: ArticleListScreen(title: 'مقالات جدید',),
     );
