@@ -8,10 +8,11 @@ import 'package:haftsara_blog/controller/single_article_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:haftsara_blog/main.dart';
 import 'package:haftsara_blog/view/article_list_screen.dart';
 
 class HomeMainBodyScreen extends StatelessWidget {
-   HomeMainBodyScreen({
+  HomeMainBodyScreen({
     super.key,
     required this.screenSize,
     required this.textTheme,
@@ -20,13 +21,13 @@ class HomeMainBodyScreen extends StatelessWidget {
   final Size screenSize;
   final TextTheme textTheme;
 
-   HomeScreenController homeScreenController = Get.put(HomeScreenController());
-  SingleArticleController singleArticleController = Get.put(SingleArticleController());
+  HomeScreenController homeScreenController = Get.put(HomeScreenController());
+  SingleArticleController singleArticleController =
+      Get.put(SingleArticleController());
   ArticleController articleController = Get.put(ArticleController());
 
   @override
   Widget build(BuildContext context) {
-   
     // CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -40,7 +41,7 @@ class HomeMainBodyScreen extends StatelessWidget {
             // poster
             // HomePoster(screenSize: widget.screenSize, textTheme: widget.textTheme),
             homePoster(),
-            
+
             const SizedBox(
               height: 15,
             ),
@@ -62,7 +63,8 @@ class HomeMainBodyScreen extends StatelessWidget {
                   width: 6,
                 ),
                 GestureDetector(
-                  onTap: () => Get.to(() => ArticleListScreen(title: 'مقالات جدید')),
+                  onTap: () =>
+                      Get.to(() => ArticleListScreen(title: 'مقالات جدید')),
                   child: Text(
                     Conststrings.viewHotPosts,
                     style: textTheme.headlineMedium,
@@ -127,10 +129,10 @@ class HomeMainBodyScreen extends StatelessWidget {
                   //  onTap: () async{
                   //   var id = homeScreenController.topArticleList[index].id;
                   //   // Get.find<SingleArticleController>().getArticleInfo(id);
-                   
+
                   //   await singleArticleController.getArticleInfo(id);
                   //   Get.toNamed(NameRoute.routeSingleArticle);
-                  
+
                   child: Column(
                     children: [
                       Stack(children: [
@@ -138,8 +140,8 @@ class HomeMainBodyScreen extends StatelessWidget {
                           height: screenSize.height / 4.5,
                           width: screenSize.width / 3.5,
                           child: CachedNetworkImage(
-                            imageUrl:
-                                homeScreenController.topArticleList[index].image!,
+                            imageUrl: homeScreenController
+                                .topArticleList[index].image!,
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
@@ -214,8 +216,9 @@ class HomeMainBodyScreen extends StatelessWidget {
             }),
       ),
     );
-  } 
- // end topArticleVisited method widget
+  }
+  // end topArticleVisited method widget
+
   Widget topPodcast() {
     return SizedBox(
       height: screenSize.height / 2.7,
@@ -224,65 +227,72 @@ class HomeMainBodyScreen extends StatelessWidget {
             itemCount: homeScreenController.topPodcastList.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: screenSize.height / 4.5,
-                      width: screenSize.width / 3.5,
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            homeScreenController.topPodcastList[index].poster!,
-                        // 'https://haftsara.ir/admin/img/posts/25536140d71e65ed09bc798da87beafc.jpeg',
-                        imageBuilder: (context, imageProvider) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Colors.grey,
-                                    offset: Offset(2, 3),
-                                    blurRadius: 2),
-                              ],
-                              image: DecorationImage(
-                                  image: imageProvider, fit: BoxFit.cover),
-                            ),
-                          );
-                        }, // imageBuilder
-                        placeholder: (context, url) {
-                          return const SpinKitFadingCircle(
-                            size: 50,
-                            color: ConstColors.primaryColor,
-                          );
-                        }, // placeholder
-                        errorWidget: (context, url, error) => const Icon(
-                          Icons.image_not_supported_outlined,
-                          size: 60,
-                          color: Colors.grey,
+              return InkWell(
+                onTap: () {
+                  Get.toNamed(NameRoute.routeSinglePodcast,
+                      arguments: homeScreenController.topPodcastList[index]);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: screenSize.height / 4.5,
+                        width: screenSize.width / 3.5,
+                        child: CachedNetworkImage(
+                          imageUrl:
+                               homeScreenController.topPodcastList[index].poster!,
+                          // 'https://haftsara.ir/admin/img/posts/25536140d71e65ed09bc798da87beafc.jpeg',
+                          imageBuilder: (context, imageProvider) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.grey,
+                                      offset: Offset(2, 3),
+                                      blurRadius: 2),
+                                ],
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                              ),
+                            );
+                          }, // imageBuilder
+                          placeholder: (context, url) {
+                            return const SpinKitFadingCircle(
+                              size: 50,
+                              color: ConstColors.primaryColor,
+                            );
+                          }, // placeholder
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.image_not_supported_outlined,
+                            size: 60,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    SizedBox(
-                        width: screenSize.width / 3.5,
-                        child: Text(
-                          homeScreenController.topPodcastList[index].title!,
-                          style: textTheme.headlineSmall,
-                          textAlign: TextAlign.center,
-                        )),
-                  ],
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      SizedBox(
+                          width: screenSize.width / 3.5,
+                          child: Text(
+                            homeScreenController.topPodcastList[index].title!,
+                            style: textTheme.headlineSmall,
+                            textAlign: TextAlign.center,
+                          )),
+                    ],
+                  ),
                 ),
               );
             }),
       ),
     );
-  } 
- // end topPodcast method widget
+  }
+
+  // end topPodcast method widget
   Widget blogCategoryList() {
-     return SizedBox(
+    return SizedBox(
       height: 50,
       child: Obx(
         () => ListView.builder(
@@ -300,34 +310,33 @@ class HomeMainBodyScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          gradient: const LinearGradient(
-                              colors: ConstColors.tagsGradientColor,
-                              begin: Alignment.centerRight,
-                              end: Alignment.centerLeft)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          children: [
-                            ImageIcon(
-                              Assets.icons.hashtag.provider(),
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              homeScreenController.categoryList[index].title!,
-                              style: textTheme.titleSmall,
-                            )
-                          ],
-                        ),
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        gradient: const LinearGradient(
+                            colors: ConstColors.tagsGradientColor,
+                            begin: Alignment.centerRight,
+                            end: Alignment.centerLeft)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          ImageIcon(
+                            Assets.icons.hashtag.provider(),
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            homeScreenController.categoryList[index].title!,
+                            style: textTheme.titleSmall,
+                          )
+                        ],
                       ),
                     ),
-                  
+                  ),
                 ),
               );
             }),
@@ -336,43 +345,44 @@ class HomeMainBodyScreen extends StatelessWidget {
   }
 
   Widget homePoster() {
-    return Obx(
-       () => homeScreenController.loading.value == false ? Stack(children: [
-        Container(
-          width: double.infinity,
-          height: screenSize.height / 4,
-         
-          foregroundDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            gradient: const LinearGradient(
-                colors: ConstColors.homePosterGradientColor,
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter),
-          ),
-          child: CachedNetworkImage(
-          imageUrl: homeScreenController.poster.value.image!,
-          imageBuilder: (context, imageProvider) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+    return Obx(() => homeScreenController.loading.value == false
+        ? Stack(children: [
+            Container(
+              width: double.infinity,
+              height: screenSize.height / 4,
+              foregroundDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                gradient: const LinearGradient(
+                    colors: ConstColors.homePosterGradientColor,
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: homeScreenController.poster.value.image!,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                        image: imageProvider, fit: BoxFit.cover),
+                  ),
+                ),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.image_not_supported_rounded),
+              ),
             ),
-          ),
-          placeholder: (context, url) => const CircularProgressIndicator(),
-          errorWidget: (context, url, error ) => const Icon(Icons.image_not_supported_rounded),
-         ),
-        ),
-        Positioned(
-          left: 0, right: 0, bottom: 10,
-          child: Center(
-              child: Text(
-            homeScreenController.poster.value.title!,
-            style: textTheme.titleLarge,
-          )),
-        ),
-      ]): const CircularProgressIndicator()
-    );
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 10,
+              child: Center(
+                  child: Text(
+                homeScreenController.poster.value.title!,
+                style: textTheme.titleLarge,
+              )),
+            ),
+          ])
+        : const CircularProgressIndicator());
   }
 }
-
-
-

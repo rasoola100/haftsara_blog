@@ -52,7 +52,10 @@ class Haftsara extends StatelessWidget {
         GetPage(
             name: NameRoute.routeSingleManageArticle,
             page: () => SingleManageArticleScreen(),
-            binding: ArticleManagerBinding())
+            binding: ArticleManagerBinding()),
+        GetPage(
+            name: NameRoute.routeSinglePodcast, 
+            page: () => SinglePodcast()),
       ],
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
@@ -108,11 +111,11 @@ class Haftsara extends StatelessWidget {
               fontSize: 13,
               fontWeight: FontWeight.w400,
               color: Color.fromARGB(255, 29, 29, 29)),
-              bodyLarge: TextStyle(
-                fontFamily: 'bNazanin',
-                fontSize: 18,
-                color: Color.fromARGB(255, 110, 110, 110),
-              ),
+          bodyLarge: TextStyle(
+            fontFamily: 'bNazanin',
+            fontSize: 18,
+            color: Color.fromARGB(255, 110, 110, 110),
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -134,8 +137,8 @@ class Haftsara extends StatelessWidget {
                 borderSide: const BorderSide(color: Colors.grey, width: 1.1),
                 borderRadius: BorderRadius.circular(15))),
       ),
-      // home: const SplashScreen(),
-      home:  const SinglePodcast(),
+      home: const SplashScreen(),
+      // home: const SinglePodcast(),
       // home: const HomeScreen(),
       // home: ArticleListScreen(title: 'مقالات جدید',),
     );
@@ -143,8 +146,10 @@ class Haftsara extends StatelessWidget {
 }
 
 class NameRoute {
+  NameRoute._();
   static String routeHomeScreen = "/homeScreen";
   static String routeSingleArticle = '/singleArticle';
   static String routeManageArticle = '/manageArticle';
   static String routeSingleManageArticle = '/singleManageArticleScreen';
+  static String routeSinglePodcast = '/singlePodcast';
 }
