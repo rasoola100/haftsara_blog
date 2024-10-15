@@ -12,17 +12,18 @@ class SinglePodcastController extends GetxController {
   RxBool loading = false.obs;
   RxList<PodcastFileModel> podcastFileList = RxList();
   late dynamic playList;
+  final player = AudioPlayer();
 
   @override
-  onInit() {
+  onInit() async{
     super.onInit();
 
     playList = ConcatenatingAudioSource(
       useLazyPreparation: true,
       children: []
       );
-  
-    getPodcastFiles();
+    await getPodcastFiles();
+    await player.setAudioSource(playList, initialIndex: 0, initialPosition: Duration.zero);
   }
 
   getPodcastFiles() async {
@@ -31,10 +32,10 @@ class SinglePodcastController extends GetxController {
     if (response.statusCode == 200) {
       for (var element in response.data['files']) {
         podcastFileList.add(PodcastFileModel.fromJson(element));
-        playList.add(HlsAudioSource(Uri.parse(PodcastFileModel.fromJson(element).file!)));
+        playList.add(AudioSource.uri(Uri.parse(PodcastFileModel.fromJson(element).file!)));
       }
       loading.value = false;
-      log(response.data);
+      // log(response.data);
     }
   }
 }

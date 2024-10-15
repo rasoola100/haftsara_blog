@@ -1,16 +1,12 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
-import 'package:haftsara_blog/model/podcast_file_model.dart';
 import 'package:haftsara_blog/model/podcast_model.dart';
-// import 'package:percent_indicator/linear_percent_indicator.dart';
-// import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:haftsara_blog/controller/single_podcast_controller.dart';
+import 'package:just_audio/just_audio.dart';
 
 class SinglePodcast extends StatelessWidget {
   // const SinglePodcast({super.key});
@@ -41,9 +37,7 @@ class SinglePodcast extends StatelessWidget {
                             height: Get.height / 2.5,
                             width: double.infinity,
                             child: CachedNetworkImage(
-                                      
                               imageUrl: podcastModel.poster!,
-                              
                               imageBuilder: (context, imageProvider) {
                                 return Image(
                                   image: imageProvider,
@@ -132,7 +126,7 @@ class SinglePodcast extends StatelessWidget {
                               width: 14,
                             ),
                             Text(
-                             podcastModel.author!,
+                              podcastModel.author!,
                               style: textTheme.labelMedium,
                             )
                           ],
@@ -144,16 +138,16 @@ class SinglePodcast extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(14),
                         child: ListView.builder(
-                          itemCount: singlePodcastController.podcastFileList.length,
-                          
+                          itemCount:
+                              singlePodcastController.podcastFileList.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 12.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                              
                                   Row(
                                     children: [
                                       ImageIcon(
@@ -164,14 +158,18 @@ class SinglePodcast extends StatelessWidget {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
-                                        singlePodcastController.podcastFileList[index].title!,
-                                        style: textTheme.headlineMedium,
+                                      SizedBox(
+                                        width: Get.width / 1.5,
+                                        child: Text(
+                                          singlePodcastController
+                                              .podcastFileList[index].title!,
+                                          style: textTheme.headlineMedium,
+                                        ),
                                       )
                                     ],
                                   ),
                                   Text(
-                                    '33:33',
+                                    '${singlePodcastController.podcastFileList[index].length!}:00',
                                     style: textTheme.headlineMedium,
                                   )
                                 ],
@@ -209,28 +207,33 @@ class SinglePodcast extends StatelessWidget {
                             progressColor: Colors.orange,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.skip_next,
                                 color: Colors.white,
                                 size: 33,
                               ),
-                              Icon(
-                                Icons.play_circle,
-                                color: Colors.white,
-                                size: 40,
+                              InkWell(
+                                onTap: () async {
+                                  await singlePodcastController.player.play();
+                                },
+                                child: const Icon(
+                                  Icons.play_circle,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.skip_previous,
                                 color: Colors.white,
                                 size: 33,
                               ),
-                              SizedBox(),
-                              Icon(
+                              const SizedBox(),
+                              const Icon(
                                 Icons.repeat,
                                 color: Colors.white,
                                 size: 33,
