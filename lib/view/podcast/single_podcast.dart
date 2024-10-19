@@ -1,3 +1,4 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -142,37 +143,48 @@ class SinglePodcast extends StatelessWidget {
                               singlePodcastController.podcastFileList.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 12.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      ImageIcon(
-                                        Assets.icons.podcast.provider(),
-                                        size: 25,
-                                        color: ConstColors.primaryColor,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      SizedBox(
-                                        width: Get.width / 1.5,
-                                        child: Text(
-                                          singlePodcastController
-                                              .podcastFileList[index].title!,
-                                          style: textTheme.headlineMedium,
+                            return InkWell(
+                              onTap: () async {
+                                await singlePodcastController.player.seek(Duration.zero, index: index);
+                                singlePodcastController.currentPodcastIndex.value =
+                                      singlePodcastController.player.currentIndex!;
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 12.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        ImageIcon(
+                                          Assets.icons.podcast.provider(),
+                                          size: 25,
+                                          color: ConstColors.primaryColor,
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  Text(
-                                    '${singlePodcastController.podcastFileList[index].length!}:00',
-                                    style: textTheme.headlineMedium,
-                                  )
-                                ],
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        SizedBox(
+                                          width: Get.width / 1.5,
+                                          child: Obx(
+                                            () => Text(
+                                              singlePodcastController
+                                                  .podcastFileList[index].title!,
+                                              style: singlePodcastController.currentPodcastIndex.value == index
+                                               ? textTheme.displayMedium 
+                                               : textTheme.headlineMedium, 
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Text(
+                                      '${singlePodcastController.podcastFileList[index].length!}:00',
+                                      style: textTheme.headlineMedium,
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -190,7 +202,7 @@ class SinglePodcast extends StatelessWidget {
                   left: 15,
                   bottom: 7,
                   child: Container(
-                    height: Get.height / 6,
+                    height: Get.height / 5,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         gradient: const LinearGradient(
@@ -201,10 +213,23 @@ class SinglePodcast extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.fromLTRB(8, 18, 8, 10),
-                          child: LinearPercentIndicator(
-                            percent: 0.4,
-                            backgroundColor: Colors.white,
-                            progressColor: Colors.orange,
+                          child: Obx(
+                            () => ProgressBar(
+                              timeLabelTextStyle: const TextStyle(color: Color.fromARGB(255, 123, 247, 129)),
+                              baseBarColor: Colors.white,
+                              thumbColor: Colors.yellow,
+                              progressBarColor: Colors.orange,
+                              // progress: const Duration(seconds: 4), 
+                              progress: singlePodcastController.progressValue.value,
+                              total: singlePodcastController.player.duration ?? Duration(seconds: 0),
+                              buffered: singlePodcastController.bufferedValue.value,
+                              onSeek: (position) { 
+                                singlePodcastController.player.seek(position);
+                                
+                                singlePodcastController.player.playing
+                                ? singlePodcastController.setProgress()
+                                : singlePodcastController.timer!.cancel();
+                              },),
                           ),
                         ),
                         Padding(
@@ -212,31 +237,77 @@ class SinglePodcast extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Icon(
-                                Icons.skip_next,
-                                color: Colors.white,
-                                size: 33,
+                              GestureDetector(
+                                onTap: () async {
+                                  await singlePodcastController.player.seekToNext();
+                    
+                                       singlePodcastController.currentPodcastIndex.value =
+                                      singlePodcastController.player.currentIndex!;
+                                },
+                                child: const Icon(
+                                  Icons.skip_next,
+                                  color: Colors.white,
+                                  size: 33,
+                                ),
                               ),
                               InkWell(
                                 onTap: () async {
-                                  await singlePodcastController.player.play();
+
+                                   singlePodcastController.player.playing
+                                   ? singlePodcastController.timer!.cancel()
+                                   : singlePodcastController.setProgress(); 
+
+
+                                  singlePodcastController.player.playing
+                                      ? await singlePodcastController.player
+                                          .pause()
+                                      : await singlePodcastController.player
+                                          .play();
+
+                                  singlePodcastController.playState.value =
+                                      singlePodcastController.player.playing;
+
+                                  singlePodcastController.currentPodcastIndex.value =
+                                      singlePodcastController.player.currentIndex!;
+
                                 },
-                                child: const Icon(
-                                  Icons.play_circle,
-                                  color: Colors.white,
-                                  size: 40,
+                                child: Obx(
+                                  () => Icon(
+                                    singlePodcastController.playState.value
+                                        ? Icons.pause_circle_filled
+                                        : Icons.play_circle_fill,
+                                    color: Colors.white,
+                                    size: 40,
+                                  ),
                                 ),
                               ),
-                              const Icon(
-                                Icons.skip_previous,
-                                color: Colors.white,
-                                size: 33,
+                              GestureDetector(
+                                onTap: () async {
+                                  await singlePodcastController.player .seekToPrevious();
+                                     
+                                         singlePodcastController.currentPodcastIndex.value =
+                                      singlePodcastController.player.currentIndex!;
+                                },
+                                child: const Icon(
+                                  Icons.skip_previous,
+                                  color: Colors.white,
+                                  size: 33,
+                                ),
                               ),
                               const SizedBox(),
-                              const Icon(
-                                Icons.repeat,
-                                color: Colors.white,
-                                size: 33,
+                              Obx(
+                                () => GestureDetector(
+                                  onTap: () {
+                                    singlePodcastController.setLoopModeMusicPlayer();
+                                  },
+                                  child: Icon(
+                                    Icons.repeat,
+                                    color: singlePodcastController.isLoopAll.value
+                                    ? Colors.blue
+                                    : Colors.white,
+                                    size: 33,
+                                  ),
+                                ),
                               ),
                             ],
                           ),

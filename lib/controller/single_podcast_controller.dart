@@ -1,4 +1,5 @@
-import 'dart:developer';
+
+import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:haftsara_blog/components/api_url_constant.dart';
@@ -13,6 +14,9 @@ class SinglePodcastController extends GetxController {
   RxList<PodcastFileModel> podcastFileList = RxList();
   late dynamic playList;
   final player = AudioPlayer();
+  RxBool playState = false.obs;
+  RxInt currentPodcastIndex = 0.obs;
+
 
   @override
   onInit() async{
@@ -38,4 +42,47 @@ class SinglePodcastController extends GetxController {
       // log(response.data);
     }
   }
+
+
+
+  Rx<Duration> progressValue = const Duration(seconds: 0).obs;
+  Rx<Duration> bufferedValue = const Duration(seconds: 0).obs;
+  Timer? timer;
+
+  setProgress() {
+    const tick = Duration(seconds: 1);
+    int duration = player.duration!.inSeconds - player.position.inSeconds;
+
+    if (timer != null) {
+      if(timer!.isActive) {
+        timer!.cancel();
+        timer = null;
+      }
+    }
+
+    timer = Timer.periodic(tick, (timer) {
+      duration --;
+      progressValue.value = player.position;
+      bufferedValue.value = player.bufferedPosition;
+      if (duration <= 0) {
+        timer.cancel();
+        progressValue.value = const Duration(seconds: 0);
+        bufferedValue.value = const Duration(seconds: 0);
+      }
+    });
+
+  }
+
+  RxBool isLoopAll = false.obs;
+
+  setLoopModeMusicPlayer() {
+    if(isLoopAll.value) {
+      isLoopAll.value = false;
+      player.setLoopMode(LoopMode.off);
+    } else {
+      isLoopAll.value = true;
+      player.setLoopMode(LoopMode.all);
+    }
+  }
+
 }

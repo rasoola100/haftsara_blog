@@ -88,6 +88,11 @@ class Haftsara extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.w600,
               color: ConstColors.primaryColor),
+          displayMedium: TextStyle(
+              fontFamily: 'yekan',
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: ConstColors.secondaryColor),
           headlineSmall: TextStyle(
               fontFamily: 'yekan',
               fontSize: 15,
