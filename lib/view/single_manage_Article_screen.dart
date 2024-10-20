@@ -3,16 +3,14 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
-import 'package:haftsara_blog/controller/article_controller.dart';
 import 'package:haftsara_blog/controller/file_controller.dart';
 import 'package:haftsara_blog/controller/home_screen_controller.dart';
 import 'package:haftsara_blog/controller/manage_article_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:haftsara_blog/services/pick_file.dart';
 import 'package:haftsara_blog/view/article_content_editor.dart';
-import 'package:haftsara_blog/view/article_list_screen.dart';
+
 
 // ignore: must_be_immutable
 class SingleManageArticleScreen extends StatelessWidget {

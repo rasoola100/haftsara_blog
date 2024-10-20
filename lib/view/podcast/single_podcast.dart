@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:haftsara_blog/model/podcast_model.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:haftsara_blog/controller/single_podcast_controller.dart';
-import 'package:just_audio/just_audio.dart';
 
 class SinglePodcast extends StatelessWidget {
   // const SinglePodcast({super.key});
@@ -148,6 +146,8 @@ class SinglePodcast extends StatelessWidget {
                                 await singlePodcastController.player.seek(Duration.zero, index: index);
                                 singlePodcastController.currentPodcastIndex.value =
                                       singlePodcastController.player.currentIndex!;
+
+                                      singlePodcastController.timerCheck();
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 12.0),
@@ -223,12 +223,23 @@ class SinglePodcast extends StatelessWidget {
                               progress: singlePodcastController.progressValue.value,
                               total: singlePodcastController.player.duration ?? Duration(seconds: 0),
                               buffered: singlePodcastController.bufferedValue.value,
-                              onSeek: (position) { 
+                              onSeek: (position) async { 
                                 singlePodcastController.player.seek(position);
                                 
-                                singlePodcastController.player.playing
-                                ? singlePodcastController.setProgress()
-                                : singlePodcastController.timer!.cancel();
+                                // singlePodcastController.player.playing
+                                // ? singlePodcastController.setProgress()
+                                // : singlePodcastController.timer!.cancel();
+
+                                if(singlePodcastController.player.playing) {
+                                  singlePodcastController.setProgress();
+                                } else if (position <= const Duration(seconds: 0)) {
+                                   await singlePodcastController.player.seekToNext();
+                                       singlePodcastController.currentPodcastIndex.value =
+                                      singlePodcastController.player.currentIndex!;
+                                      singlePodcastController.timerCheck();
+                                }
+
+
                               },),
                           ),
                         ),
@@ -243,6 +254,7 @@ class SinglePodcast extends StatelessWidget {
                     
                                        singlePodcastController.currentPodcastIndex.value =
                                       singlePodcastController.player.currentIndex!;
+                                      singlePodcastController.timerCheck();
                                 },
                                 child: const Icon(
                                   Icons.skip_next,
@@ -287,6 +299,7 @@ class SinglePodcast extends StatelessWidget {
                                      
                                          singlePodcastController.currentPodcastIndex.value =
                                       singlePodcastController.player.currentIndex!;
+                                      singlePodcastController.timerCheck();
                                 },
                                 child: const Icon(
                                   Icons.skip_previous,

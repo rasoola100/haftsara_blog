@@ -1,19 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:haftsara_blog/binding.dart';
 import 'package:haftsara_blog/components/const_colors.dart';
 import 'package:haftsara_blog/my_http_override.dart';
-import 'package:haftsara_blog/view/article_content_editor.dart';
-import 'package:haftsara_blog/view/home_screen.dart';
-import 'package:haftsara_blog/view/manage_article.dart';
-import 'package:haftsara_blog/view/podcast/single_podcast.dart';
-import 'package:haftsara_blog/view/single_manage_Article_screen.dart';
-import 'package:haftsara_blog/view/single_screen.dart';
+import 'package:haftsara_blog/route_manager/name_route.dart';
+import 'package:haftsara_blog/route_manager/pages.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:haftsara_blog/view/splash_screen.dart';
+
 
 // void main() => runApp(const Haftsara());
 void main() async {
@@ -35,31 +29,10 @@ class Haftsara extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // initialBinding: RegisterBinding(),
-      getPages: [
-        GetPage(
-            name: NameRoute.routeHomeScreen,
-            page: () => const HomeScreen(),
-            binding: RegisterBinding()),
-        GetPage(
-            name: NameRoute.routeSingleArticle,
-            page: () => SingleScreen(),
-            binding: ArticleBinding()),
-        GetPage(
-            name: NameRoute.routeManageArticle,
-            page: () => ManageArticle(),
-            binding: ArticleManagerBinding()),
-        GetPage(
-            name: NameRoute.routeSingleManageArticle,
-            page: () => SingleManageArticleScreen(),
-            binding: ArticleManagerBinding()),
-        GetPage(
-            name: NameRoute.routeSinglePodcast, 
-            page: () => SinglePodcast()),
-      ],
+      initialRoute: NameRoute.initialRoute,
+      getPages: Pages.pages,
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
-
       theme: ThemeData(
         fontFamily: 'bNazanin',
         textTheme: const TextTheme(
@@ -142,19 +115,10 @@ class Haftsara extends StatelessWidget {
                 borderSide: const BorderSide(color: Colors.grey, width: 1.1),
                 borderRadius: BorderRadius.circular(15))),
       ),
-      home: const SplashScreen(),
-      // home: const SinglePodcast(),
-      // home: const HomeScreen(),
-      // home: ArticleListScreen(title: 'مقالات جدید',),
+      // home: const SplashScreen(),
+ 
     );
   }
 }
 
-class NameRoute {
-  NameRoute._();
-  static String routeHomeScreen = "/homeScreen";
-  static String routeSingleArticle = '/singleArticle';
-  static String routeManageArticle = '/manageArticle';
-  static String routeSingleManageArticle = '/singleManageArticleScreen';
-  static String routeSinglePodcast = '/singlePodcast';
-}
+

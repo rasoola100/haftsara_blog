@@ -6,7 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:haftsara_blog/components/api_url_constant.dart';
 import 'package:haftsara_blog/components/storage_const.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
-import 'package:haftsara_blog/main.dart';
+
+import 'package:haftsara_blog/route_manager/name_route.dart';
 import 'package:haftsara_blog/services/dio_service.dart';
 import 'package:haftsara_blog/view/home_screen.dart';
 import 'package:haftsara_blog/view/register_intro.dart';

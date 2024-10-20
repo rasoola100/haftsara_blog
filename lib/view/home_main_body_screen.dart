@@ -8,7 +8,7 @@ import 'package:haftsara_blog/controller/single_article_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:haftsara_blog/main.dart';
+import 'package:haftsara_blog/route_manager/name_route.dart';
 import 'package:haftsara_blog/view/article_list_screen.dart';
 
 class HomeMainBodyScreen extends StatelessWidget {

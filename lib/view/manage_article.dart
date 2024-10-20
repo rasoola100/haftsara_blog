@@ -6,7 +6,7 @@ import 'package:haftsara_blog/components/const_strings.dart';
 import 'package:haftsara_blog/components/my_component.dart';
 import 'package:haftsara_blog/controller/manage_article_controller.dart';
 import 'package:haftsara_blog/gen/assets.gen.dart';
-import 'package:haftsara_blog/main.dart';
+import 'package:haftsara_blog/route_manager/name_route.dart';
 
 // ignore: must_be_immutable
 class ManageArticle extends StatelessWidget {

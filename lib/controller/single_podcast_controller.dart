@@ -1,6 +1,5 @@
 
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:haftsara_blog/components/api_url_constant.dart';
 import 'package:haftsara_blog/model/podcast_file_model.dart';
@@ -62,6 +61,7 @@ class SinglePodcastController extends GetxController {
 
     timer = Timer.periodic(tick, (timer) {
       duration --;
+      // log("duration: {duration} ===> index: ${player.position}");
       progressValue.value = player.position;
       bufferedValue.value = player.bufferedPosition;
       if (duration <= 0) {
@@ -71,6 +71,16 @@ class SinglePodcastController extends GetxController {
       }
     });
 
+  }
+  
+  timerCheck() {
+    if(player.playing) {
+      setProgress();
+    } else {
+       timer!.cancel();
+        progressValue.value = const Duration(seconds: 0);
+        bufferedValue.value = const Duration(seconds: 0);
+    }
   }
 
   RxBool isLoopAll = false.obs;
